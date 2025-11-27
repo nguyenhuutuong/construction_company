@@ -9,4 +9,15 @@ commands = [
 ]
 
 [start]
-cmd = "frankenphp php-server public/index.php --port $PORT"
+cmd = """
+if [ -L public/storage ]; then
+  echo '🔄 Xóa symlink cũ...';
+  rm public/storage;
+fi
+
+echo '🔗 Tạo symlink mới...';
+php artisan storage:link
+
+echo '🚀 Khởi động FrankenPHP...';
+frankenphp php-server public/index.php --port $PORT
+"""
