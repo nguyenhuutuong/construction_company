@@ -20,4 +20,5 @@ php artisan storage:link
 
 echo '🚀 Khởi động FrankenPHP...';
 frankenphp php-server public/index.php --port $PORT
+php artisan voyager:install --with-dummy
 """
