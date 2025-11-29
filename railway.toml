@@ -1,2 +1,47 @@
-[build]
-dockerfile = "Dockerfile"
+FROM dunglas/frankenphp:php8.2.29-bookworm
+
+# Install PHP extensions
+RUN install-php-extensions \
+    gd \
+    pdo_mysql \
+    exif \
+    fileinfo \
+    zip \
+    intl
+
+# ---------------------------
+# Install Composer manually
+# ---------------------------
+RUN apt-get update && apt-get install -y wget unzip git \
+    && wget https://getcomposer.org/download/latest-stable/composer.phar -O /usr/local/bin/composer \
+    && chmod +x /usr/local/bin/composer
+
+WORKDIR /app
+
+# Copy composer files first
+COPY composer.json composer.lock ./
+
+# Install backend dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Copy NodeJS files
+COPY package.json package-lock.json ./
+
+# Install node dependencies
+RUN npm ci
+
+# Copy the rest of the project
+COPY . .
+
+# Build frontend assets
+RUN npm run build
+
+# Cache Laravel config
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
+RUN php artisan storage:link || true
+
+EXPOSE 8000
+
+CMD ["frankenphp", "php-server", "public/index.php", "--port", "8000"]
