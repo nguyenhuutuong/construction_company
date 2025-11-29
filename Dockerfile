@@ -1,32 +1,44 @@
-# Phase 1: Build PHP extensions + composer dependencies
-FROM dunglas/frankenphp as builder
+# -----------------------------------------------------
+# 1) Builder stage: install PHP extensions + composer
+# -----------------------------------------------------
+FROM dunglas/frankenphp AS builder
 
-# Install system dependencies
+# Install system packages + composer
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libwebp-dev \
-    zip unzip git
+    curl \
+    zip unzip git \
+    libpng-dev libjpeg-dev libfreetype6-dev libwebp-dev && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Enable GD
+# Enable GD extension
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 RUN docker-php-ext-install gd
 
-# Install composer dependencies
+# Copy composer files
+WORKDIR /app
 COPY composer.json composer.lock ./
+
+# Install composer dependencies (no dev)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Phase 2: Production image
+# -----------------------------------------------------
+# 2) Production stage
+# -----------------------------------------------------
 FROM dunglas/frankenphp
 
-# Copy code
-COPY . /app
+WORKDIR /app
 
-# Copy vendor
+# Copy full source
+COPY . .
+
+# Copy vendor from builder
 COPY --from=builder /app/vendor /app/vendor
 
 # Permissions
 RUN mkdir -p storage bootstrap/cache && chmod -R 777 storage bootstrap/cache
 
+# Expose port
+EXPOSE 8080
+
+# Start server
 CMD ["frankenphp", "php-server", "public/index.php", "--port", "8080"]
