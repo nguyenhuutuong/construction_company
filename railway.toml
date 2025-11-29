@@ -10,19 +10,9 @@ nixPkgs = [
 commands = [
   "composer install --no-dev --optimize-autoloader",
   "npm ci",
-  "npm run build"
+  "npm run build",
+  "php artisan storage:link"   # ← CHỈ CHẠY Ở ĐÂY
 ]
 
 [start]
-cmd = """
-if [ -L public/storage ]; then
-  echo '🔄 Xóa symlink cũ...';
-  rm public/storage;
-fi
-
-echo '🔗 Tạo symlink mới...';
-php artisan storage:link
-
-echo '🚀 Khởi động FrankenPHP...';
-frankenphp php-server public/index.php --port $PORT
-"""
+cmd = "frankenphp php-server public/index.php --port $PORT"
