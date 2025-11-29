@@ -13,10 +13,13 @@ nixPkgs = [
 commands = [
   "composer install --no-dev --optimize-autoloader",
   "php artisan key:generate --force",
-  "php artisan storage:link",
   "npm ci",
   "npm run build"
 ]
 
 [start]
-cmd = "frankenphp php-server public/index.php --port $PORT"
+cmd = """
+rm -f public/storage || true
+php artisan storage:link
+frankenphp php-server public/index.php --port $PORT
+"""
