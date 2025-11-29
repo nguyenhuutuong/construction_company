@@ -9,9 +9,10 @@ nixPkgs = [
 [phases.build]
 commands = [
   "composer install --no-dev --optimize-autoloader",
+  "php artisan key:generate --force",
+  "php artisan storage:link",
   "npm ci",
-  "npm run build",
-  "php artisan storage:link"   # ← CHỈ CHẠY Ở ĐÂY
+  "npm run build"
 ]
 
 [start]
