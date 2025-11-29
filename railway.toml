@@ -1,24 +1,18 @@
 [phases.setup]
-nixPkgs = ["php", "php82Extensions.pdo", "php82Extensions.pdo_mysql"]
+nixPkgs = [
+  "php",
+  "php82Extensions.pdo",
+  "php82Extensions.pdo_mysql",
+  "php82Extensions.gd"
+]
 
 [phases.build]
 commands = [
   "composer install --no-dev --optimize-autoloader",
   "npm ci",
-  "npm run build"
+  "npm run build",
+  "php artisan storage:link"   # ← CHỈ CHẠY Ở ĐÂY
 ]
 
 [start]
-cmd = """
-if [ -L public/storage ]; then
-  echo '🔄 Xóa symlink cũ...';
-  rm public/storage;
-fi
-
-echo '🔗 Tạo symlink mới...';
-php artisan storage:link
-
-echo '🚀 Khởi động FrankenPHP...';
-frankenphp php-server public/index.php --port $PORT
-php artisan voyager:install --with-dummy
-"""
+cmd = "frankenphp php-server public/index.php --port $PORT"
