@@ -1,0 +1,18 @@
+[phases.setup]
+nixPkgs = [
+  "php",
+  "php82Extensions.pdo",
+  "php82Extensions.pdo_mysql",
+  "php82Extensions.gd"
+]
+
+[phases.build]
+commands = [
+  "composer install --no-dev --optimize-autoloader",
+  "npm ci",
+  "npm run build",
+  "php artisan storage:link || true"
+]
+
+[start]
+cmd = "frankenphp php-server public/index.php --port $PORT --config /app/php.ini"
