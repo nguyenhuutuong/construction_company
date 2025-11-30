@@ -10,9 +10,11 @@ nixPkgs = [
 commands = [
   "composer install --no-dev --optimize-autoloader",
   "npm ci",
-  "npm run build",
-  "php artisan storage:link"   # ← CHỈ CHẠY Ở ĐÂY
+  "npm run build"
 ]
 
 [start]
-cmd = "frankenphp php-server public/index.php --port $PORT"
+cmd = """
+php -d upload_max_filesize=50M -d post_max_size=50M artisan storage:link || true
+frankenphp php-server public/index.php --port $PORT --config php.ini
+"""
