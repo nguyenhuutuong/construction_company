@@ -12,11 +12,13 @@
       "cmds": [
         "composer install --no-dev --optimize-autoloader",
         "npm ci",
-        "npm run build"
+        "npm run build",
+        "mkdir -p /app/frankenphp",
+        "cp /app/php.ini /app/frankenphp/php.ini"
       ]
     }
   },
   "start": {
-    "cmd": "php artisan storage:link || true && frankenphp php-server public/index.php --port $PORT --config /app/php.ini"
+    "cmd": "php artisan storage:link || true && frankenphp php-server public/index.php --port $PORT"
   }
 }
