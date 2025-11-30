@@ -15,4 +15,4 @@ commands = [
 ]
 
 [start]
-cmd = "frankenphp php-server public/index.php --port $PORT --config /app/php.ini"
+cmd = "frankenphp php-server public/index.php --port $PORT"
