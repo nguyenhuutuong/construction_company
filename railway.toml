@@ -13,8 +13,3 @@ commands = [
   "npm run build"
 ]
 
-[start]
-cmd = """
-php artisan storage:link || true
-frankenphp php-server public/index.php --port $PORT --config /app/php.ini
-"""
