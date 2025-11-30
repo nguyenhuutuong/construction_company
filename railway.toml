@@ -15,6 +15,6 @@ commands = [
 
 [start]
 cmd = """
-php -d upload_max_filesize=50M -d post_max_size=50M artisan storage:link || true
-frankenphp php-server public/index.php --port $PORT --config php.ini
+php artisan storage:link || true
+frankenphp php-server public/index.php --port $PORT --config /app/php.ini
 """
