@@ -26,20 +26,21 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
+    {   
+        $limit = 6;
         if (env('APP_ENV') === 'production') {
         URL::forceScheme('https');
         }   
         Paginator::useBootstrap();
         // Tạo biến global
         View::share('MenuServices', Service::select('name', 'slug')
-                                        ->where('is_featured', 1)->get());
+                                        ->where('is_featured', 1)->take($limit)->get());
         View::share('MenuHomeType', HomeType::select('id', 'name', 'slug')
-                                        ->where('is_featured', 1)->get());
+                                        ->where('is_featured', 1)->take($limit)->get());
         View::share('MenuNewCategory', NewCategory::select('id', 'name', 'slug')
-                                        ->where('is_featured', 1)->get());
-        View::share('MenuConsulting', Consulting::select('id', 'title', 'slug', 'summary')
-                                        ->where('is_featured', 1)->get());
+                                        ->where('is_featured', 1)->take($limit)->get());
+        View::share('MenuConsulting', Consulting::select('id', 'title', 'slug', 'summary', 'image')
+                                        ->where('is_featured', 1)->take($limit)->get());
                                                                        
     }
 }

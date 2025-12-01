@@ -178,7 +178,7 @@
             <h1 class="main-title mt-3">{{$project->name}}</h1>
             
             <h2 class="info-title">Thông tin công trình</h2>
-            <div class="property-item"><span>Chủ đầu tư</span><div>{{$project->investor}}</div></div>
+            {{-- <div class="property-item"><span>Chủ đầu tư</span><div>{{$project->investor}}</div></div>
             <div class="property-item"><span>Loại hình</span><div>{{$project->project_type}}</div></div>
             <div class="property-item"><span>Diện tích khu đất</span><div>{{$project->land_area}}</div></div>
             <div class="property-item"><span>Diện tích xây dựng</span><div>{{$project->construction_area}}</div></div>
@@ -186,7 +186,70 @@
             <div class="property-item"><span>Công năng </span><div>{!! $project->features !!}</div></div>
             <div class="property-item"><span>Địa chỉ</span><div>{{$project->address}}</div></div>
             <div class="property-item"><span>Hợp đồng</span><div>{{$project->contract_type}}</div></div>
-            <div class="property-item"><span>Năm thực hiện </span><div>{{$project->year}}</div></div>
+            <div class="property-item"><span>Năm thực hiện </span><div>{{$project->year}}</div></div> --}}
+            @if($project->investor)
+            <div class="property-item">
+                <span>Chủ đầu tư</span>
+                <div>{{ $project->investor }}</div>
+            </div>
+            @endif
+
+            @if($project->project_type)
+            <div class="property-item">
+                <span>Loại hình</span>
+                <div>{{ $project->project_type }}</div>
+            </div>
+            @endif
+
+            @if($project->land_area)
+            <div class="property-item">
+                <span>Diện tích khu đất</span>
+                <div>{{ $project->land_area }}</div>
+            </div>
+            @endif
+
+            @if($project->construction_area)
+            <div class="property-item">
+                <span>Diện tích xây dựng</span>
+                <div>{{ $project->construction_area }}</div>
+            </div>
+            @endif
+
+            @if($project->floors)
+            <div class="property-item">
+                <span>Số tầng</span>
+                <div>{{ $project->floors }}</div>
+            </div>
+            @endif
+
+            @if($project->features)
+            <div class="property-item">
+                <span>Công năng</span>
+                <div>{!! $project->features !!}</div>
+            </div>
+            @endif
+
+            @if($project->address)
+            <div class="property-item">
+                <span>Địa chỉ</span>
+                <div>{{ $project->address }}</div>
+            </div>
+            @endif
+
+            @if($project->contract_type)
+            <div class="property-item">
+                <span>Hợp đồng</span>
+                <div>{{ $project->contract_type }}</div>
+            </div>
+            @endif
+
+            @if($project->year)
+            <div class="property-item">
+                <span>Năm thực hiện</span>
+                <div>{{ $project->year }}</div>
+            </div>
+            @endif
+
 
             <div class="detail-content">
                 {!! $project->content !!}

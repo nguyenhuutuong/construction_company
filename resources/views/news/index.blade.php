@@ -167,6 +167,7 @@
                             </div>
                         </article>
                     @endforeach
+                    {{ $news->links('pagination::bootstrap-4') }}
                 @endif            
              <!-- More articles can be added here to demonstrate scrolling -->
 

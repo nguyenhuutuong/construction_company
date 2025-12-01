@@ -24,14 +24,29 @@
             @else
                 @foreach($MenuConsulting as $item)
                 <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$item->title}}</h5>
-                            <p class="card-text">{{$item->summary}}</p>
-                            <a href="{{ route('consulting.detail', $item->slug) }}" class="btn btn-danger">Xem chi tiết</a>
+                    <div class="card h-100 d-flex flex-column">
+
+                        <div class="card-image-wrapper" style="height: 260px; overflow: hidden;">
+                            <img src="{{ Voyager::image($item->image) }}"
+                                alt="{{ $item->title }}"
+                                class="img-fluid w-100"
+                                style="height: 100%; object-fit: cover;">
                         </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ $item->title }}</h5>
+
+                            <p class="card-text">
+                                {{ \Illuminate\Support\Str::words($item->summary, 50, '...') }}
+                            </p>
+
+                            <a href="{{ route('consulting.detail', $item->slug) }}"
+                            class="btn btn-danger mt-auto">Xem chi tiết</a>
+                        </div>
+
                     </div>
                 </div>
+
                 @endforeach
             @endif
             

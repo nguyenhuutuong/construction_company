@@ -83,24 +83,9 @@
                         </a>
                     </div>
                 @endforeach
+               {{ $projects->appends(request()->query())->links('pagination::bootstrap-4') }}
             @endif
             
-
-            <!-- Sample Project 2 -->
-            <!-- <div class="col-lg-4 col-md-6 mb-4">
-                 <a href="{{ route('projects.detail', ['slug' => 'cai-tao-chung-cu-go-vap']) }}" class="project-card-link">
-                    <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format&fit=crop" class="project-card-img" alt="Dự án Cải tạo Chung cư Gò Vấp">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="card-title fw-bold mb-0">Cải tạo Chung cư Gò Vấp</h5>
-                                 <span class="project-status status-in-progress">Đang thi công</span>
-                            </div>
-                            <p class="card-text text-muted small">Thay áo mới cho căn hộ, mang đến một không gian sống tươi mới và hiện đại.</p>
-                        </div>
-                    </div>
-                </a>
-            </div> -->
         </div>
     </div>
 </section>

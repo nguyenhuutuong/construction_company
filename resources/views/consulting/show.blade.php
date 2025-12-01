@@ -113,9 +113,9 @@
                         <span>Ngày đăng: {{ $consulting->created_at->format('d/m/Y') }}</span>
                     </div>
                     <div class="article-content">
-                        @if($consulting->image)
+                        {{-- @if($consulting->image)
                         <img src="{{ Voyager::image($consulting->image) }}" alt="{{ $consulting->title }}" class="img-fluid rounded mb-4">
-                        @endif
+                        @endif --}}
 
                         {!! $consulting->content !!}
                     </div>
